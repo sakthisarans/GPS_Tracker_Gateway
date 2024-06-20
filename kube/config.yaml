@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trackergateway
+spec:
+  selector:
+    matchLabels:
+      app: trackergateway
+  template:
+    metadata:
+      labels:
+        app: trackergateway
+    spec:
+      containers:
+      - name: trackergateway
+        image: sakthisaran/tracker_gateway:BUILDNUMBER
+        env:
+        - name: AUTH_SERVER_URL
+          value: htt://trackerauthservice:80
+        
+        resources:
+          limits:
+            memory: "200Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: trackergatewayservice
+spec:
+  type: LoadBalancer
+  selector:
+    app: trackergateway
+  ports:
+  - port: 80
+    targetPort: 80
