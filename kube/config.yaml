@@ -16,7 +16,7 @@ spec:
         image: sakthisaran/tracker_gateway:BUILDNUMBER
         env:
         - name: AUTH_SERVER_URL
-          value: htt://trackerauthservice:80
+          value: http://trackerauthservice:80
         
         resources:
           limits:
