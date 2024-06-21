@@ -13,6 +13,7 @@ spring:
         - id: auth-service
           uri: ${AUTH_SERVER_URL:http://localhost:8080}
           predicates:
+            - Method=GET,POST,DELETE
             - Path=/tracker/auth/**,/tracker/user/**
 
 
