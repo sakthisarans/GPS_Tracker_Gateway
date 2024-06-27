@@ -14,6 +14,13 @@ spring:
           uri: ${AUTH_SERVER_URL:http://localhost:8080}
           predicates:
             - Method=GET,POST,DELETE
-            - Path=/tracker/auth/**,/tracker/user/**
+            - Path=/tracker/auth/**,/tracker/user/**,/v1/api-docs
+
+        - id: emqx-socket
+          uri: ws://192.168.0.108:32771
+          predicates:
+            - Path=/**
+          filters:
+            - RewritePath=/,/mqtt
 
 
