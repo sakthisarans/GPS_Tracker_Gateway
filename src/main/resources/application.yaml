@@ -1,26 +1,24 @@
-server:
-  port: 80
-logging:
-  level:
-    web: debug
-    root: debug
 spring:
   application:
-    name: gateway
-  cloud:
-    gateway:
-      routes:
-        - id: auth-service
-          uri: ${AUTH_SERVER_URL:http://localhost:8080}
-          predicates:
-            - Method=GET,POST,DELETE
-            - Path=/tracker/auth/**,/tracker/user/**,/v1/api-docs
+    name: MY-EUREKA-SERVER
 
-        - id: emqx-socket
-          uri: ws://192.168.0.108:32771
-          predicates:
-            - Path=/**
-          filters:
-            - RewritePath=/,/mqtt
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    disable-swagger-default-url: true
+    path: /swagger/swagger.html
+    defaultModelsExpandDepth: -1
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v1/auth/api-docs
+        name: Auth Service
+      - url: /v1/generic/api-docs
+        name: GENERIC SERVICE
+      - url: /v1/emqx/api-docs
+        name: Tracker Service
+
+
 
 
