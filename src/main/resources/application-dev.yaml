@@ -29,6 +29,12 @@ spring:
             - Method=GET
             - Path=/v1/generic/api-docs
 
+        - id: emqx
+          uri: http://localhost:32768
+          predicates:
+            - Method=GET,POST,PUT,DELETE
+            - Path=/api-docs/swagger.json,/api/v5/**
+
         - id: emqx-socket
           uri: ws://192.168.0.108:32771
           predicates:

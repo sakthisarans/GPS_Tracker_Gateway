@@ -13,11 +13,13 @@ springdoc:
     config-url: /v3/api-docs/swagger-config
     urls:
       - url: /v1/auth/api-docs
-        name: Auth Service
+        name: AUTH SERVICE
       - url: /v1/generic/api-docs
         name: GENERIC SERVICE
       - url: /v1/emqx/api-docs
-        name: Tracker Service
+        name: TRACKER SERVICE
+      - url: /api-docs/swagger.json
+        name: EMQX
 
 
 
