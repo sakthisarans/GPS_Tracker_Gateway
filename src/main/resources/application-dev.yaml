@@ -26,8 +26,8 @@ spring:
         - id: generic
           uri: http://localhost:82
           predicates:
-            - Method=GET
-            - Path=/v1/generic/api-docs
+            - Method=GET,POST
+            - Path=/v1/generic/api-docs,/tracker/resource/**
 
         - id: emqx
           uri: http://localhost:32768
