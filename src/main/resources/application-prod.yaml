@@ -1,5 +1,9 @@
 server:
   port: 80
+logging:
+  level:
+    web: debug
+    root: debug
 
 spring:
   application:
@@ -11,17 +15,29 @@ spring:
           uri: ${AUTH_SERVER_URL}
           predicates:
             - Method=GET,POST,DELETE
-            - Path=/tracker/auth/**,/tracker/user/**,/v1/api-docs
+            - Path=/tracker/auth/**,/tracker/user/**,/v1/auth/api-docs
 
         - id: tracker-manager
-          uri: ${TRACKER_MANAGER}
+          uri: ${MAIN_SERVER_URL}
           predicates:
             - Method=GET,POST,DELETE
-            - Path=/tracker/emqx/**
+            - Path=/tracker/emqx/**,/v1/emqx/api-docs
+
+        - id: generic
+          uri: ${GENERIC_SERVER_URL}
+          predicates:
+            - Method=GET,POST
+            - Path=/v1/generic/api-docs,/tracker/resource/**
+
+        - id: emqx
+          uri: ${EMQX_SERVER_URL}
+          predicates:
+            - Method=GET,POST,PUT,DELETE
+            - Path=/api-docs/swagger.json,/api/v5/**
 
         - id: emqx-socket
-          uri: ${EMQX_MQTT_SOCKET}
+          uri: ${EMQX_SOCKET}
           predicates:
-            - Path=/**
+            - Path=/
           filters:
             - RewritePath=/,/mqtt

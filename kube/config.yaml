@@ -17,6 +17,14 @@ spec:
         env:
         - name: AUTH_SERVER_URL
           value: http://trackerauthservice:80
+        - name: MAIN_SERVER_URL
+          value: http://trackermainservice:80
+        - name: GENERIC_SERVER_URL
+          value: http://trackergenericservice:80
+        - name: EMQX_SERVER_URL
+          value: http://emqxdashboard:80
+        - name: EMQX_SOCKET
+          value: ws://emqxmqtt:8083
         
         resources:
           limits:
@@ -24,17 +32,3 @@ spec:
             cpu: "200m"
         ports:
         - containerPort: 80
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: trackergatewayservice
-spec:
-  type: LoadBalancer
-  selector:
-    app: trackergateway
-  ports:
-  - port: 80
-    targetPort: 80
