@@ -25,7 +25,12 @@ spec:
           value: http://emqxdashboard:80
         - name: EMQX_SOCKET
           value: ws://emqxmqtt:8083
-        
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+            secretKeyRef:
+              name: secretpasswords
+              key: SPRING_PROFILE
+              
         resources:
           limits:
             memory: "200Mi"
