@@ -15,7 +15,7 @@ public class CorsConfig extends CorsConfiguration {
     {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials( true );
-        config.setAllowedOrigins( List.of( "http://localhost:800" ) );
+        config.setAllowedOrigins( List.of( "http://localhost:3000","https://web.sakthisaran.site" ) );
         config.setAllowedMethods( List.of( "GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD" ) );
         config.setAllowedHeaders( List.of( "*" ) );
 
