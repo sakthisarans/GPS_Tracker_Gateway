@@ -37,6 +37,9 @@ public class TokenValidationFilter extends AbstractGatewayFilterFactory<TokenVal
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
+            if(exchange.getRequest().getURI().getPath().contains("api-docs")){
+                return chain.filter(exchange);
+            }
             String email=(validateToken(Objects.requireNonNull(exchange.getRequest().getHeaders().get("Authorization")).get(0)));
             HttpHeaders updatedRequestHeaders = updateRequestHeaders(exchange, email);
             System.out.println(updatedRequestHeaders);
