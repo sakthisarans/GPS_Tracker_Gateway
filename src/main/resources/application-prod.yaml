@@ -16,9 +16,15 @@ spring:
           uri: ${AUTH_SERVER_URL}
           predicates:
             - Method=GET,POST,DELETE
-            - Path=/tracker/auth/**,/tracker/user/**,/v1/auth/api-docs
+            - Path=/tracker/user/**,/v1/auth/api-docs
           filters:
             - TokenValidationFilter
+
+        - id: auth-service-unauth
+          uri: ${AUTH_SERVER_URL}
+          predicates:
+            - Method=GET,POST,DELETE
+            - Path=/tracker/auth/**
 
         - id: tracker-manager
           uri: ${MAIN_SERVER_URL}

@@ -16,9 +16,15 @@ spring:
           uri: http://localhost:81
           predicates:
             - Method=GET,POST,DELETE
-            - Path=/tracker/auth/**,/tracker/user/**,/v1/auth/api-docs
+            - Path=/tracker/user/**,/v1/auth/api-docs
           filters:
             - TokenValidationFilter
+
+        - id: auth-service-unauth
+          uri: http://localhost:81
+          predicates:
+            - Method=GET,POST,DELETE
+            - Path=/tracker/auth/**
 
         - id: tracker-manager
           uri: http://localhost:83
