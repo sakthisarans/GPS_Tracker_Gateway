@@ -5,7 +5,7 @@ logging:
     web: debug
     root: debug
 tracker:
-  validateUrl: https://api.sakthisaran.site
+  validateUrl: http://trackerauthservice:80
 spring:
   application:
     name: gateway
