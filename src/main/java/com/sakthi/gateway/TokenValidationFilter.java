@@ -4,17 +4,16 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -43,9 +42,18 @@ public class TokenValidationFilter extends AbstractGatewayFilterFactory<TokenVal
             String email="";
             try {
                 email = (validateToken(Objects.requireNonNull(exchange.getRequest().getHeaders().get("Authorization")).get(0)));
-            }catch (Exception ex){
-                System.out.println(ex);
-                return null;
+            }catch (HttpClientErrorException ex){
+                if(ex.getStatusCode()==HttpStatus.UNAUTHORIZED){
+                    return Mono.defer(() -> {
+                                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                                return exchange.getResponse().setComplete();
+                    });
+                }else{
+                    return Mono.defer(() -> {
+                        exchange.getResponse().setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+                        return exchange.getResponse().setComplete();
+                    });
+                }
             }
             HttpHeaders updatedRequestHeaders = updateRequestHeaders(exchange, email);
             System.out.println(updatedRequestHeaders);
