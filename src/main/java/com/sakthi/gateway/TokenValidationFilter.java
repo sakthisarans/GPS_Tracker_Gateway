@@ -38,6 +38,11 @@ public class TokenValidationFilter extends AbstractGatewayFilterFactory<TokenVal
         return (exchange, chain) -> {
             if(exchange.getRequest().getURI().getPath().contains("api-docs")){
                 return chain.filter(exchange);
+            }else if(Objects.requireNonNull(exchange.getRequest().getHeaders().get("Authorization")).get(0)!=null){
+                return Mono.defer(() -> {
+                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                    return exchange.getResponse().setComplete();
+                });
             }
             String email="";
             try {
