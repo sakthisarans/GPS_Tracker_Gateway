@@ -60,6 +60,11 @@ public class TokenValidationFilter extends AbstractGatewayFilterFactory<TokenVal
                         return exchange.getResponse().setComplete();
                     });
                 }
+            }catch (NullPointerException ex){
+                return Mono.defer(() -> {
+                    exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);
+                    return exchange.getResponse().setComplete();
+                });
             }
             HttpHeaders updatedRequestHeaders = updateRequestHeaders(exchange, email);
             System.out.println(updatedRequestHeaders);
