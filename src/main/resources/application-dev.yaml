@@ -23,7 +23,7 @@ spring:
         - id: auth-service-unauth
           uri: http://localhost:81
           predicates:
-            - Method=GET,POST,DELETE
+            - Method=GET,POST,DELETE,PUT
             - Path=/tracker/auth/**
 
         - id: tracker-manager
