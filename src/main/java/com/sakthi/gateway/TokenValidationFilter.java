@@ -88,7 +88,7 @@ public class TokenValidationFilter extends AbstractGatewayFilterFactory<TokenVal
     }
 
     private HttpHeaders updateRequestHeaders(ServerWebExchange exchange, String email){
-        HttpHeaders headers = exchange.getRequest().getHeaders();
+        // HttpHeaders headers = exchange.getRequest().getHeaders();
         HttpHeaders updatedHeaders = new HttpHeaders();
         updatedHeaders.add("email", email);
         return updatedHeaders;
