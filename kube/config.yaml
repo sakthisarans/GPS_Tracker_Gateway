@@ -30,7 +30,21 @@ spec:
             secretKeyRef:
               name: secretpasswords
               key: SPRING_PROFILE
-
+        startupProbe:
+          httpGet:
+            path: /actuator/health
+            port: 80
+          initialDelaySeconds: 300
+          failureThreshold: 3
+          periodSeconds: 10
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 80
+            httpHeaders:
+            - name: Application
+              value: application/json
         resources:
           limits:
             memory: "200Mi"
